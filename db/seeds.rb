@@ -14,7 +14,7 @@ zoom_lens  = Equipment.create!(name: "Zoom Lens 40x",       serial_number: "LNS-
 router     = Equipment.create!(name: "Cisco Router",        serial_number: "RTR-005", status: "available",   category: networking)
 switch     = Equipment.create!(name: "Network Switch",      serial_number: "SWT-006", status: "maintenance", category: networking)
 arduino    = Equipment.create!(name: "Arduino Starter Kit", serial_number: "ARD-007", status: "in_use",      category: electronics)
-breadboard = Equipment.create!(name: "Breadboard Kit",      serial_number: "BRD-008",                        category: electronics)
+breadboard = Equipment.create!(name: "Breadboard Kit",      serial_number: "BRD-008", status: "in_use",      category: electronics)
 
 MaintenanceRecord.create!(
   description:  "Replaced thermal paste and cleaned the cooling fan. Unit was throttling under sustained load.",
