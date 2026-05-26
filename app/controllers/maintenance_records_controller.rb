@@ -1,5 +1,5 @@
 class MaintenanceRecordsController < ApplicationController
-  before_action :set_maintenance_record, only: [:show, :update, :destroy]
+  before_action :set_maintenance_record, only: [ :show, :update, :destroy ]
 
   def index
     maintenance_records = MaintenanceRecord.includes(:equipment)
@@ -17,7 +17,7 @@ class MaintenanceRecordsController < ApplicationController
     render json: maintenance_records.as_json(
       include: {
         equipment: {
-          only: [:id, :name]
+          only: [ :id, :name ]
         }
       }
     ), status: :ok
@@ -27,23 +27,13 @@ class MaintenanceRecordsController < ApplicationController
     render json: @maintenance_record.as_json(
       include: {
         equipment: {
-          only: [:id, :name]
+          only: [ :id, :name ]
         }
       }
     ), status: :ok
   end
 
   def create
-    equipment = Equipment.find_by(
-      id: maintenance_record_params[:equipment_id]
-    )
-
-    unless equipment
-      return render json: {
-        errors: ["Equipment must exist"]
-      }, status: :unprocessable_entity
-    end
-
     maintenance_record = MaintenanceRecord.new(
       maintenance_record_params
     )
@@ -59,16 +49,6 @@ class MaintenanceRecordsController < ApplicationController
   end
 
   def update
-    equipment = Equipment.find_by(
-      id: maintenance_record_params[:equipment_id]
-    )
-
-    unless equipment
-      return render json: {
-        errors: ["Equipment must exist"]
-      }, status: :unprocessable_entity
-    end
-
     if @maintenance_record.update(
       maintenance_record_params
     )
@@ -102,7 +82,7 @@ class MaintenanceRecordsController < ApplicationController
   end
 
   def maintenance_record_params
-    params.permit(
+    params.require(:maintenance_record).permit(
       :description,
       :performed_at,
       :equipment_id
