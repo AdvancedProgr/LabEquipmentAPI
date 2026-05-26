@@ -36,12 +36,6 @@ class EquipmentController < ApplicationController
   end
 
   def create
-    category = Category.find_by(id: equipment_params[:category_id])
-
-    unless category
-      return render json: { error: "Category not found" }, status: :unprocessable_entity
-    end
-
     equipment = Equipment.new(equipment_params)
 
     if equipment.save
@@ -52,12 +46,6 @@ class EquipmentController < ApplicationController
   end
 
   def update
-    category = Category.find_by(id: equipment_params[:category_id])
-
-    unless category
-      return render json: { error: "Category not found" }, status: :unprocessable_entity
-    end
-
     if @equipment.update(equipment_params)
       render json: @equipment
     else
