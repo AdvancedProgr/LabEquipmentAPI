@@ -55,8 +55,7 @@ class EquipmentController < ApplicationController
 
   def destroy
     @equipment.destroy
-
-    render json: { message: "Equipment deleted successfully" }
+    head :no_content
   end
 
   private
