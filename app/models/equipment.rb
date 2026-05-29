@@ -4,6 +4,8 @@ class Equipment < ApplicationRecord
 
   STATUSES = %w[available in_use maintenance].freeze
 
+  before_validation :set_default_status, on: :create
+
   validates :name, presence: true
   validates :name, length: { minimum: 3 }
   validate  :name_must_contain_letter
@@ -22,4 +24,10 @@ class Equipment < ApplicationRecord
   validates :status,
     presence: true,
     inclusion: { in: STATUSES }
+
+  private
+
+  def set_default_status
+    self.status ||= "available"
+  end
 end

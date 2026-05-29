@@ -1,0 +1,561 @@
+======================================================================
+Lab Equipment API - Curl Commands and Responses
+======================================================================
+
+
+important note use curl.exe for windows 
+
+----------------------------------------------------------------------
+TASK 3: Category CRUD
+----------------------------------------------------------------------
+
+>> curl -s http://localhost:3000/categories
+[
+  {
+    "id": 3,
+    "created_at": "2026-05-27T12:40:22.265Z",
+    "name": "Computing",
+    "updated_at": "2026-05-27T12:48:35.800Z"
+  },
+  {
+    "id": 6,
+    "created_at": "2026-05-27T12:40:22.734Z",
+    "name": "Electronics",
+    "updated_at": "2026-05-27T12:40:22.734Z"
+  },
+  {
+    "id": 5,
+    "created_at": "2026-05-27T12:40:22.576Z",
+    "name": "Networking",
+    "updated_at": "2026-05-27T12:40:22.576Z"
+  },
+  {
+    "id": 4,
+    "created_at": "2026-05-27T12:40:22.422Z",
+    "name": "Optics",
+    "updated_at": "2026-05-27T12:40:22.422Z"
+  },
+  {
+    "id": 7,
+    "created_at": "2026-05-27T12:46:47.195Z",
+    "name": "TestCat",
+    "updated_at": "2026-05-27T12:46:47.195Z"
+  }
+]
+
+>> curl -s http://localhost:3000/categories/3
+{
+  "id": 3,
+  "created_at": "2026-05-27T12:40:22.265Z",
+  "name": "Computing",
+  "updated_at": "2026-05-27T12:48:35.800Z",
+  "equipment_count": 2
+}
+
+>> curl -s -X POST http://localhost:3000/categories -H "Content-Type: application/json" -d '{"category":{"name":"Robotics"}}'
+{
+  "id": 9,
+  "created_at": "2026-05-27T12:52:09.212Z",
+  "name": "Robotics",
+  "updated_at": "2026-05-27T12:52:09.212Z"
+}
+
+>> curl -s -X POST http://localhost:3000/categories -H "Content-Type: application/json" -d '{"category":{"name":"AB"}}'
+{
+  "errors": [
+    "Name is too short (minimum is 3 characters)"
+  ]
+}
+
+>> curl -s -X PATCH http://localhost:3000/categories/3 -H "Content-Type: application/json" -d '{"category":{"name":"Computing-Updated"}}'
+{
+  "name": "Computing-Updated",
+  "id": 3,
+  "created_at": "2026-05-27T12:40:22.265Z",
+  "updated_at": "2026-05-27T12:52:09.993Z"
+}
+
+>> curl -s -X DELETE http://localhost:3000/categories/3
+{
+  "error": "Cannot delete category. 2 equipment items still belong to it."
+}
+
+>> curl -s -X DELETE http://localhost:3000/categories/8
+{
+  "error": "Category not found"
+}
+
+----------------------------------------------------------------------
+TASK 4: Equipment CRUD
+----------------------------------------------------------------------
+
+>> curl -s http://localhost:3000/equipment
+[
+  {
+    "id": 7,
+    "category_id": 6,
+    "created_at": "2026-05-27T12:40:24.438Z",
+    "name": "Arduino Starter Kit",
+    "serial_number": "ARD-007",
+    "status": "in_use",
+    "updated_at": "2026-05-27T12:40:24.438Z",
+    "category": {
+      "id": 6,
+      "name": "Electronics"
+    }
+  },
+  {
+    "id": 8,
+    "category_id": 6,
+    "created_at": "2026-05-27T12:40:24.604Z",
+    "name": "Breadboard Kit",
+    "serial_number": "BRD-008",
+    "status": "in_use",
+    "updated_at": "2026-05-27T12:40:24.604Z",
+    "category": {
+      "id": 6,
+      "name": "Electronics"
+    }
+  },
+  {
+    "id": 5,
+    "category_id": 5,
+    "created_at": "2026-05-27T12:40:24.124Z",
+    "name": "Cisco Router",
+    "serial_number": "RTR-005",
+    "status": "available",
+    "updated_at": "2026-05-27T12:40:24.124Z",
+    "category": {
+      "id": 5,
+      "name": "Networking"
+    }
+  },
+  {
+    "id": 1,
+    "category_id": 3,
+    "created_at": "2026-05-27T12:40:23.500Z",
+    "name": "Dell Laptop",
+    "serial_number": "LAP-001",
+    "status": "available",
+    "updated_at": "2026-05-27T12:48:39.726Z",
+    "category": {
+      "id": 3,
+      "name": "Computing"
+    }
+  },
+  {
+    "id": 3,
+    "category_id": 4,
+    "created_at": "2026-05-27T12:40:23.816Z",
+    "name": "Lab Microscope",
+    "serial_number": "MIC-003",
+    "status": "maintenance",
+    "updated_at": "2026-05-27T12:40:23.816Z",
+    "category": {
+      "id": 4,
+      "name": "Optics"
+    }
+  },
+  {
+    "id": 6,
+    "category_id": 5,
+    "created_at": "2026-05-27T12:40:24.270Z",
+    "name": "Network Switch",
+    "serial_number": "SWT-006",
+    "status": "maintenance",
+    "updated_at": "2026-05-27T12:40:24.270Z",
+    "category": {
+      "id": 5,
+      "name": "Networking"
+    }
+  },
+  {
+    "id": 2,
+    "category_id": 3,
+    "created_at": "2026-05-27T12:40:23.652Z",
+    "name": "Raspberry Pi 4",
+    "serial_number": "RPI-002",
+    "status": "in_use",
+    "updated_at": "2026-05-27T12:40:23.652Z",
+    "category": {
+      "id": 3,
+      "name": "Computing"
+    }
+  },
+  {
+    "id": 4,
+    "category_id": 4,
+    "created_at": "2026-05-27T12:40:23.969Z",
+    "name": "Zoom Lens 40x",
+    "serial_number": "LNS-004",
+    "status": "available",
+    "updated_at": "2026-05-27T12:40:23.969Z",
+    "category": {
+      "id": 4,
+      "name": "Optics"
+    }
+  }
+]
+
+>> curl -s "http://localhost:3000/equipment?status=maintenance"
+[
+  {
+    "id": 3,
+    "category_id": 4,
+    "created_at": "2026-05-27T12:40:23.816Z",
+    "name": "Lab Microscope",
+    "serial_number": "MIC-003",
+    "status": "maintenance",
+    "updated_at": "2026-05-27T12:40:23.816Z",
+    "category": {
+      "id": 4,
+      "name": "Optics"
+    }
+  },
+  {
+    "id": 6,
+    "category_id": 5,
+    "created_at": "2026-05-27T12:40:24.270Z",
+    "name": "Network Switch",
+    "serial_number": "SWT-006",
+    "status": "maintenance",
+    "updated_at": "2026-05-27T12:40:24.270Z",
+    "category": {
+      "id": 5,
+      "name": "Networking"
+    }
+  }
+]
+
+>> curl -s http://localhost:3000/equipment/1
+{
+  "id": 1,
+  "category_id": 3,
+  "created_at": "2026-05-27T12:40:23.500Z",
+  "name": "Dell Laptop",
+  "serial_number": "LAP-001",
+  "status": "available",
+  "updated_at": "2026-05-27T12:48:39.726Z",
+  "category": {
+    "id": 3,
+    "name": "Computing"
+  },
+  "maintenance_records": [
+    {
+      "id": 2,
+      "created_at": "2026-05-27T12:40:24.829Z",
+      "description": "Updated BIOS firmware and ran a full disk diagnostic scan. No bad sectors detected.",
+      "equipment_id": 1,
+      "performed_at": "2026-05-20T12:40:24.826Z",
+      "updated_at": "2026-05-27T12:40:24.829Z"
+    },
+    {
+      "id": 1,
+      "created_at": "2026-05-27T12:40:24.710Z",
+      "description": "Updated description",
+      "equipment_id": 1,
+      "performed_at": "2026-05-06T12:40:24.674Z",
+      "updated_at": "2026-05-27T12:48:43.585Z"
+    }
+  ]
+}
+
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Test Device","serial_number":"TST-001","status":"available","category_id":3}}'
+{
+  "id": 10,
+  "category_id": 3,
+  "created_at": "2026-05-27T12:52:12.630Z",
+  "name": "Test Device",
+  "serial_number": "TST-001",
+  "status": "available",
+  "updated_at": "2026-05-27T12:52:12.630Z"
+}
+
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Bad Serial","serial_number":"bad-01","status":"available","category_id":3}}'
+{
+  "errors": [
+    "Serial number must look like ABC-123"
+  ]
+}
+
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Broken Status","serial_number":"BRK-001","status":"broken","category_id":3}}'
+{
+  "errors": [
+    "Status is not included in the list"
+  ]
+}
+
+>> curl -s -X PATCH http://localhost:3000/equipment/1 -H "Content-Type: application/json" -d '{"equipment":{"name":"Dell Laptop Updated"}}'
+{
+  "name": "Dell Laptop Updated",
+  "category_id": 3,
+  "serial_number": "LAP-001",
+  "id": 1,
+  "created_at": "2026-05-27T12:40:23.500Z",
+  "status": "available",
+  "updated_at": "2026-05-27T12:52:13.732Z"
+}
+
+>> curl -s -X DELETE http://localhost:3000/equipment/9
+{
+  "error": "Equipment not found"
+}
+
+----------------------------------------------------------------------
+TASK 5: MaintenanceRecord CRUD
+----------------------------------------------------------------------
+
+>> curl -s http://localhost:3000/maintenance_records
+[
+  {
+    "id": 4,
+    "created_at": "2026-05-27T12:40:25.044Z",
+    "description": "Replaced cracked eyepiece and confirmed magnification accuracy across all zoom levels.",
+    "equipment_id": 3,
+    "performed_at": "2026-05-24T12:40:25.040Z",
+    "updated_at": "2026-05-27T12:40:25.044Z",
+    "equipment": {
+      "id": 3,
+      "name": "Lab Microscope"
+    }
+  },
+  {
+    "id": 2,
+    "created_at": "2026-05-27T12:40:24.829Z",
+    "description": "Updated BIOS firmware and ran a full disk diagnostic scan. No bad sectors detected.",
+    "equipment_id": 1,
+    "performed_at": "2026-05-20T12:40:24.826Z",
+    "updated_at": "2026-05-27T12:40:24.829Z",
+    "equipment": {
+      "id": 1,
+      "name": "Dell Laptop"
+    }
+  },
+  {
+    "id": 5,
+    "created_at": "2026-05-27T12:40:25.158Z",
+    "description": "Reset device to factory defaults and applied the latest vendor firmware patch.",
+    "equipment_id": 5,
+    "performed_at": "2026-05-17T12:40:25.155Z",
+    "updated_at": "2026-05-27T12:40:25.158Z",
+    "equipment": {
+      "id": 5,
+      "name": "Cisco Router"
+    }
+  },
+  {
+    "id": 1,
+    "created_at": "2026-05-27T12:40:24.710Z",
+    "description": "Updated description",
+    "equipment_id": 1,
+    "performed_at": "2026-05-06T12:40:24.674Z",
+    "updated_at": "2026-05-27T12:48:43.585Z",
+    "equipment": {
+      "id": 1,
+      "name": "Dell Laptop"
+    }
+  },
+  {
+    "id": 3,
+    "created_at": "2026-05-27T12:40:24.935Z",
+    "description": "Cleaned all objective lenses and recalibrated the focus mechanism after reported image distortion.",
+    "equipment_id": 3,
+    "performed_at": "2026-03-27T12:40:24.928Z",
+    "updated_at": "2026-05-27T12:40:24.935Z",
+    "equipment": {
+      "id": 3,
+      "name": "Lab Microscope"
+    }
+  }
+]
+
+>> curl -s "http://localhost:3000/maintenance_records?equipment_id=1"
+[
+  {
+    "id": 2,
+    "created_at": "2026-05-27T12:40:24.829Z",
+    "description": "Updated BIOS firmware and ran a full disk diagnostic scan. No bad sectors detected.",
+    "equipment_id": 1,
+    "performed_at": "2026-05-20T12:40:24.826Z",
+    "updated_at": "2026-05-27T12:40:24.829Z",
+    "equipment": {
+      "id": 1,
+      "name": "Dell Laptop"
+    }
+  },
+  {
+    "id": 1,
+    "created_at": "2026-05-27T12:40:24.710Z",
+    "description": "Updated description",
+    "equipment_id": 1,
+    "performed_at": "2026-05-06T12:40:24.674Z",
+    "updated_at": "2026-05-27T12:48:43.585Z",
+    "equipment": {
+      "id": 1,
+      "name": "Dell Laptop"
+    }
+  }
+]
+
+>> curl -s http://localhost:3000/maintenance_records/1
+{
+  "id": 1,
+  "created_at": "2026-05-27T12:40:24.710Z",
+  "description": "Updated description",
+  "equipment_id": 1,
+  "performed_at": "2026-05-06T12:40:24.674Z",
+  "updated_at": "2026-05-27T12:48:43.585Z",
+  "equipment": {
+    "id": 1,
+    "name": "Dell Laptop"
+  }
+}
+
+>> curl -s -X POST http://localhost:3000/maintenance_records -H "Content-Type: application/json" -d '{"maintenance_record":{"description":"Cleaned and tested all connections.","performed_at":"2026-05-26T12:00:00Z","equipment_id":2}}'
+{
+  "id": 7,
+  "created_at": "2026-05-27T12:52:15.639Z",
+  "description": "Cleaned and tested all connections.",
+  "equipment_id": 2,
+  "performed_at": "2026-05-26T12:00:00.000Z",
+  "updated_at": "2026-05-27T12:52:15.639Z"
+}
+
+>> curl -s -X PATCH http://localhost:3000/maintenance_records/1 -H "Content-Type: application/json" -d '{"maintenance_record":{"description":"Updated description"}}'
+{
+  "description": "Updated description",
+  "equipment_id": 1,
+  "id": 1,
+  "created_at": "2026-05-27T12:40:24.710Z",
+  "performed_at": "2026-05-06T12:40:24.674Z",
+  "updated_at": "2026-05-27T12:48:43.585Z"
+}
+
+>> curl -s -X DELETE http://localhost:3000/maintenance_records/6
+{
+  "error": "Maintenance record not found"
+}
+
+----------------------------------------------------------------------
+TASK 6: Business Rules
+----------------------------------------------------------------------
+
+--- Rule 1: Serial number format (XXX-NNN) ---
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Bad Serial","serial_number":"bad-01","status":"available","category_id":3}}'
+{
+  "errors": [
+    "Serial number must look like ABC-123"
+  ]
+}
+
+--- Rule 2: Maintenance date cannot be in the future ---
+>> curl -s -X POST http://localhost:3000/maintenance_records -H "Content-Type: application/json" -d '{"maintenance_record":{"description":"Future","performed_at":"2027-01-01T12:00:00Z","equipment_id":2}}'
+{
+  "errors": [
+    "Performed at cannot be in the future"
+  ]
+}
+
+--- Rule 3: Category name minimum length (3 chars) ---
+>> curl -s -X POST http://localhost:3000/categories -H "Content-Type: application/json" -d '{"category":{"name":"AB"}}'
+{
+  "errors": [
+    "Name is too short (minimum is 3 characters)"
+  ]
+}
+
+--- Rule 4: Equipment name must contain a letter ---
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"123","serial_number":"NUM-001","status":"available","category_id":3}}'
+{
+  "errors": [
+    "Name must contain at least one letter"
+  ]
+}
+
+--- Rule 4b: Equipment name minimum length (3 chars) ---
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"AB","serial_number":"SHT-001","status":"available","category_id":3}}'
+{
+  "errors": [
+    "Name is too short (minimum is 3 characters)"
+  ]
+}
+
+----------------------------------------------------------------------
+TASK 7: Edge Cases (All 10)
+----------------------------------------------------------------------
+
+EC1: Create equipment with category_id that does not exist (expect 422)
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Edge Test","serial_number":"EDG-001","status":"available","category_id":999}}'
+{
+  "errors": [
+    "Category must exist"
+  ]
+}
+
+EC2: Create equipment with duplicate serial number (expect 422)
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Duplicate Serial","serial_number":"LAP-001","status":"available","category_id":3}}'
+{
+  "errors": [
+    "Serial number has already been taken"
+  ]
+}
+
+EC3: Create equipment with invalid status 'broken' (expect 422)
+>> curl -s -X POST http://localhost:3000/equipment -H "Content-Type: application/json" -d '{"equipment":{"name":"Broken Status","serial_number":"STS-001","status":"broken","category_id":3}}'
+{
+  "errors": [
+    "Status is not included in the list"
+  ]
+}
+
+EC4: Create category with duplicate name (expect 422)
+>> curl -s -X POST http://localhost:3000/categories -H "Content-Type: application/json" -d '{"category":{"name":"Computing"}}'
+{
+  "errors": [
+    "Name has already been taken"
+  ]
+}
+
+EC5: Create maintenance record with equipment_id that does not exist (expect 422)
+>> curl -s -X POST http://localhost:3000/maintenance_records -H "Content-Type: application/json" -d '{"maintenance_record":{"description":"Bad equipment edge","performed_at":"2026-05-26T12:00:00Z","equipment_id":999}}'
+{
+  "errors": [
+    "Equipment must exist"
+  ]
+}
+
+EC6: DELETE /categories/:id when equipment still belongs to it (expect 409)
+>> curl -s -X DELETE http://localhost:3000/categories/3
+{
+  "error": "Cannot delete category. 3 equipment items still belong to it."
+}
+
+EC7: GET /categories/999 (expect 404)
+>> curl -s http://localhost:3000/categories/999
+{
+  "error": "Category not found"
+}
+
+EC8: GET /equipment/999 (expect 404)
+>> curl -s http://localhost:3000/equipment/999
+{
+  "error": "Equipment not found"
+}
+
+EC9: PATCH /categories/999 (expect 404)
+>> curl -s -X PATCH http://localhost:3000/categories/999 -H "Content-Type: application/json" -d '{"category":{"name":"Nope"}}'
+{
+  "error": "Category not found"
+}
+
+EC10: POST maintenance record with future performed_at (expect 422)
+>> curl -s -X POST http://localhost:3000/maintenance_records -H "Content-Type: application/json" -d '{"maintenance_record":{"description":"Future edge","performed_at":"2030-06-01T12:00:00Z","equipment_id":2}}'
+{
+  "errors": [
+    "Performed at cannot be in the future"
+  ]
+}
+
+======================================================================
+END OF DOCUMENT
+======================================================================

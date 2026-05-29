@@ -77,7 +77,7 @@ class MaintenanceRecordsController < ApplicationController
     unless @maintenance_record
       render json: {
         error: "Maintenance record not found"
-      }, status: :not_found
+      }, status: :not_found and return
     end
   end
 
