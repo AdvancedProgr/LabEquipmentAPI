@@ -29,7 +29,7 @@ This API manages three core models — **Categories**, **Equipment**, and **Main
 ### Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/AdvancedProgr/LabEquipmentAPI.git
 cd LabEquipmentAPI
 bundle install
 bin/rails db:create
